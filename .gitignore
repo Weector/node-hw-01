@@ -1,0 +1,8 @@
+*.a
+!lib.a
+/TODO
+build/
+doc/*.txt
+doc/**/*.txt
+.vscode
+node_modules/*
