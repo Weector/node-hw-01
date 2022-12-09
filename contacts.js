@@ -18,7 +18,7 @@ async function getContactById(contactId) {
   const contact = contacts.find(({ id }) => contactId.toString() === id);
 
   if (!contact) {
-    throw new Error("contact not found");
+    throw new Error("Contact not found");
   }
 
   return contact;
@@ -27,6 +27,11 @@ async function getContactById(contactId) {
 async function removeContact(contactId) {
   const contacts = await listContacts();
   const deletedId = contacts.findIndex(({ id }) => id === contactId.toString());
+
+  if ((deletedId + 1).toString() !== contactId) {
+    throw new Error("Contact not found");
+  }
+
   const [deleteContact] = contacts.splice(deletedId, 1);
 
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
@@ -39,7 +44,7 @@ async function addContact(name, email, phone) {
   const id = contacts.map(({ id }) => parseInt(id));
 
   const newId = (id) => {
-    for (var i = 1; i <= id.length; i++) {
+    for (let i = 1; i <= id.length; i++) {
       if (id.indexOf(i) === -1) {
         return i.toString();
       }
